@@ -1,8 +1,8 @@
-from flask import Flask, render_template, request, url_for, redirect, session, jsonify
-import instaloader
+from flask import Flask, render_template, request, url_for, jsonify
 import os
-import shutil
 import secrets
+from bs4 import BeautifulSoup
+import requests
 
 app = Flask(__name__)
 app.secret_key = secrets.token_hex(16)
@@ -11,66 +11,10 @@ STATIC_DOWNLOADS = os.path.join("static", "downloads")
 # ensure static downloads folder exists
 os.makedirs(STATIC_DOWNLOADS, exist_ok=True)
 
-
-@app.route("/", methods=["GET", "POST"])
+@app.route("/")
 def index():
-    if request.method == "POST":
-        url = request.form.get("url")
-        shortcode = url.split("/")[-2]
+    return render_template("index.html")
 
-        # temporary download folder
-        temp_dir = os.path.join("temp", shortcode)
-        os.makedirs(temp_dir, exist_ok=True)
-
-        loader = instaloader.Instaloader(
-            download_comments=False,
-            download_geotags=False,
-            download_pictures=False,
-            download_video_thumbnails=False,
-            save_metadata=False,
-            dirname_pattern=temp_dir
-        )
-
-        try:
-            post = instaloader.Post.from_shortcode(loader.context, shortcode)
-            loader.download_post(post, target=shortcode)
-
-            # find mp4 inside temp folder
-            video_file = None
-            for root, _, files in os.walk(temp_dir):
-                for f in files:
-                    if f.endswith(".mp4"):
-                        video_file = os.path.join(root, f)
-                        break
-
-            if video_file:
-                final_name = f"{shortcode}.mp4"
-                final_path = os.path.join(STATIC_DOWNLOADS, final_name)
-
-                if os.path.exists(final_path):
-                    os.remove(final_path)
-
-                shutil.move(video_file, final_path)
-                shutil.rmtree(temp_dir, ignore_errors=True)
-
-                video_url = url_for("static", filename=f"downloads/{final_name}")
-                session["preview"] = video_url
-                return redirect(url_for("index"))
-
-            else:
-                session["error"] = "No video found for this link."
-                return redirect(url_for("index"))
-
-        except Exception as e:
-            session["error"] = str(e)
-            return redirect(url_for("index"))
-
-    # GET request
-    preview = session.pop("preview", None)
-    error = session.pop("error", None)
-    return render_template("index.html", preview=preview, error=error)
-
-# ---------- New API route ----------
 @app.route("/api/download", methods=["POST"])
 def api_download():
     try:
@@ -79,51 +23,57 @@ def api_download():
             return jsonify({"flag": False, "error": "URL not provided"}), 400
 
         url = data["url"]
-        shortcode = url.split("/")[-2]
+        full_instagram_url = url if url.startswith("http") else f"https://{url}"
+        snapdownloader_url = f"https://snapdownloader.com/tools/instagram-downloader/download?url={requests.utils.quote(full_instagram_url)}"
 
-        temp_dir = os.path.join("temp", shortcode)
-        os.makedirs(temp_dir, exist_ok=True)
+        headers = {
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"
+        }
+        response = requests.get(snapdownloader_url, headers=headers)
+        soup = BeautifulSoup(response.text, "html.parser")
 
-        loader = instaloader.Instaloader(
-            download_comments=False,
-            download_geotags=False,
-            download_pictures=False,
-            download_video_thumbnails=False,
-            save_metadata=False,
-            dirname_pattern=temp_dir
-        )
+        # Extract video and thumbnail URLs
+        download_links = soup.select('.download-item a.btn-download')
+        video_url = download_links[0]['href'] if len(download_links) > 0 else None
+        thumbnail_url = download_links[-1]['href'] if len(download_links) > 1 else None
 
-        post = instaloader.Post.from_shortcode(loader.context, shortcode)
-        loader.download_post(post, target=shortcode)
+        flag = bool(video_url and thumbnail_url)
 
-        # find mp4 inside temp folder
-        video_file = None
-        for root, _, files in os.walk(temp_dir):
-            for f in files:
-                if f.endswith(".mp4"):
-                    video_file = os.path.join(root, f)
-                    break
+        # Download thumbnail locally if available
+        local_thumb_url = None
+        if thumbnail_url:
+            try:
+                shortcode = None
+                # Try to extract shortcode from video_url or request url
+                if video_url:
+                    parts = video_url.split('/')
+                    for part in parts:
+                        if len(part) == 11 and part.isalnum():
+                            shortcode = part
+                            break
+                if not shortcode:
+                    # fallback: try from input url
+                    input_url = data["url"]
+                    shortcode = input_url.split("/")[-2] if "/" in input_url else "thumb"
+                thumb_name = f"{shortcode}_thumb.jpg"
+                thumb_path = os.path.join(STATIC_DOWNLOADS, thumb_name)
+                thumb_resp = requests.get(thumbnail_url, stream=True, timeout=10)
+                if thumb_resp.status_code == 200:
+                    with open(thumb_path, "wb") as f:
+                        for chunk in thumb_resp.iter_content(chunk_size=8192):
+                            if chunk:
+                                f.write(chunk)
+                    local_thumb_url = url_for("static", filename=f"downloads/{thumb_name}")
+            except Exception:
+                local_thumb_url = None
 
-        if video_file:
-            final_name = f"{shortcode}.mp4"
-            final_path = os.path.join(STATIC_DOWNLOADS, final_name)
-
-            if os.path.exists(final_path):
-                os.remove(final_path)
-
-            shutil.move(video_file, final_path)
-            shutil.rmtree(temp_dir, ignore_errors=True)
-
-            video_url = url_for("static", filename=f"downloads/{final_name}", _external=True)
-            return jsonify({"flag": True, "preview": video_url})
-
-        else:
-            shutil.rmtree(temp_dir, ignore_errors=True)
-            return jsonify({"flag": False, "error": "No video found for this link."})
-
+        return jsonify({
+            "flag": flag,
+            "videoUrl": video_url,
+            "thumbnailUrl": local_thumb_url or thumbnail_url
+        })
     except Exception as e:
-        shutil.rmtree(temp_dir, ignore_errors=True)
-        return jsonify({"flag": False, "error": str(e)})
+        return jsonify({"flag": False, "error": f"Failed to scrape the SnapDownloader page: {str(e)}"})
 
 if __name__ == "__main__":
     app.run(debug=True)
