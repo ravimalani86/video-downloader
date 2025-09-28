@@ -1,7 +1,13 @@
 header { background: #fff; padding: 12px 20px; box-shadow: 0 2px 6px rgba(0,0,0,0.08); position: sticky; top: 0; z-index: 10; }
 header .logo { font-weight: 600; font-size: 20px; text-decoration: none; }
+header .logo .fab { margin-right: 5px; }
 header nav { float: right; }
 header nav a { margin-left: 15px; text-decoration: none; font-weight: 500; }
+header nav a i, .menu-dropdown .menu-trigger i, .menu-dropdown .submenu a i {
+  margin-right: 6px;
+  font-size: 1em;
+  vertical-align: middle;
+}
 
 .menu-dropdown {
   position: relative;
@@ -19,24 +25,145 @@ header nav a { margin-left: 15px; text-decoration: none; font-weight: 500; }
   left: 0;
   top: 100%;
   background: #fff;
-  min-width: 160px;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.10);
-  border-radius: 8px;
-  padding: 8px 0;
+  min-width: 180px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+  border-radius: 14px;
+  padding: 10px 0;
   z-index: 100;
-}
-.menu-dropdown .submenu a {
-  display: block;
-  padding: 10px 20px;
-  color: #333;
-  text-decoration: none;
-  font-weight: 500;
-  white-space: nowrap;
-}
-.menu-dropdown .submenu a:hover {
-  background: #f5f7fa;
+  opacity: 0;
+  transform: translateY(10px);
+  pointer-events: none;
+  transition: opacity 0.25s cubic-bezier(.4,0,.2,1), transform 0.25s cubic-bezier(.4,0,.2,1);
 }
 .menu-dropdown:hover .submenu,
 .menu-dropdown:focus-within .submenu {
   display: block;
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+.menu-dropdown .submenu a {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  color: #333;
+  text-decoration: none;
+  font-weight: 500;
+  white-space: nowrap;
+  border: none;
+  background: none;
+  transition: background 0.18s, color 0.18s, transform 0.18s;
+  border-radius: 8px;
+  margin: 0 8px;
+}
+.menu-dropdown .submenu a:hover {
+  background: #f0f4fa;
+  color: #E1306C;
+  transform: translateX(4px) scale(1.04);
+}
+.menu-dropdown .submenu a:not(:last-child) {
+  border-bottom: 1px solid #f2f2f2;
+}
+.burger-menu {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 2rem;
+  color: #333;
+  cursor: pointer;
+  margin-left: 10px;
+  z-index: 200;
+  height: 44px;
+  width: 44px;
+  align-items: center;
+  justify-content: center;
+}
+
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1100px;
+  margin: 0 auto;
+  height: 56px;
+  position: relative;
+}
+header {
+  padding: 0 20px;
+  height: 56px;
+}
+header .logo {
+  font-weight: 600;
+  font-size: 20px;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  height: 56px;
+}
+
+@media (max-width: 900px) {
+  .header-inner {
+    height: 56px;
+    padding: 0;
+  }
+  .burger-menu {
+    display: flex;
+    position: static;
+    margin-left: auto;
+  }
+  .nav-links {
+    display: none;
+    flex-direction: column;
+    align-items: flex-start;
+    position: absolute;
+    top: 56px;
+    left: 0;
+    width: 100vw;
+    background: #fff;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+    border-radius: 0 0 16px 16px;
+    padding: 18px 0 12px 0;
+    z-index: 150;
+    transition: all 0.25s cubic-bezier(.4,0,.2,1);
+  }
+  .nav-links.active {
+    display: flex;
+  }
+  header nav a, .menu-dropdown {
+    margin-left: 0;
+    width: 100%;
+    padding: 10px 24px;
+  }
+  .menu-dropdown .submenu {
+    position: static;
+    box-shadow: none;
+    border-radius: 10px;
+    opacity: 1;
+    transform: none;
+    pointer-events: auto;
+    transition: none;
+    min-width: 100%;
+  }
+}
+@media (max-width: 700px) {
+  header nav { float: none; display: flex; flex-direction: column; align-items: flex-start; }
+  .menu-dropdown { width: 100%; }
+  .menu-dropdown .submenu {
+    left: 0;
+    right: auto;
+    min-width: 160px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+    border-radius: 12px;
+    padding: 8px 0;
+    position: static;
+    transform: none;
+    opacity: 1;
+    pointer-events: auto;
+    transition: none;
+  }
+  .menu-dropdown .submenu a {
+    padding: 12px 18px;
+    margin: 0 4px;
+  }
 }
