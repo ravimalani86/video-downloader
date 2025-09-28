@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% block title %}Facebook Video Downloader{% endblock %}
-{% block css %}<link rel="stylesheet" href="{{ url_for('static', filename='facebook.css') }}">{% endblock %}
+{% block css %}<link rel="stylesheet" href="{{ url_for('static', filename='css/facebook.css') }}">{% endblock %}
 {% block extra_head %}
 <!-- Any page-specific head content can go here -->
 {% endblock %}
@@ -27,4 +27,4 @@
 <!-- Loader -->
 <div class="loader-overlay" id="facebookLoader"><div class="spinner"></div></div>
 {% endblock %}
-{% block js %}<script src="{{ url_for('static', filename='facebook.js') }}"></script>{% endblock %}
+{% block js %}<script src="{{ url_for('static', filename='js/facebook.js') }}"></script>{% endblock %}

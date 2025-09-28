@@ -5,13 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{% block title %}Instagram Video Downloader{% endblock %}</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-  <link rel="stylesheet" href="{{ url_for('static', filename='header.css') }}">
-  <link rel="stylesheet" href="{{ url_for('static', filename='footer.css') }}">
-  <link rel="stylesheet" href="{{ url_for('static', filename='features.css') }}">
-  <link rel="stylesheet" href="{{ url_for('static', filename='howto.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/header.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/footer.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/features.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/howto.css') }}">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
-  {% block css %}<link rel="stylesheet" href="{{ url_for('static', filename='instagram.css') }}">{% endblock %}
+  {% block css %}<link rel="stylesheet" href="{{ url_for('static', filename='css/instagram.css') }}">{% endblock %}
   {% block extra_head %}{% endblock %}
 </head>
 <body>
@@ -20,6 +20,6 @@
     {% block content %}{% endblock %}
   </main>
   {% include 'footer.html' %}
-  {% block js %}<script src="{{ url_for('static', filename='instagram.js') }}"></script>{% endblock %}
+  {% block js %}<script src="{{ url_for('static', filename='js/instagram.js') }}"></script>{% endblock %}
 </body>
 </html>
