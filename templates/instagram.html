@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block title %}Instagram Video Downloader{% endblock %}
+{% block extra_head %}
+<!-- Any page-specific head content can go here -->
+{% endblock %}
+{% block content %}
+<!-- Hero -->
+<section class="hero">
+  <h1>Download Instagram Videos Instantly</h1>
+  <p>Paste the Instagram link below and download reels, posts, and videos in high quality. Fast, free, and secure!</p>
+</section>
+
+<!-- Tool Form -->
+<div class="tool-section">
+  <form id="downloadForm">
+    <input type="text" name="url" id="urlInput" placeholder="Paste Instagram post/reel link here" required>
+    <button type="submit">Download Video</button>
+  </form>
+  <div id="errorBox" class="error" style="display:none;"></div>
+  <div id="previewBox" class="preview" style="display:none;"></div>
+</div>
+
+{% include 'features.html' %}
+{% include 'howto.html' %}
+
+<!-- Loader -->
+<div class="loader-overlay" id="loader"><div class="spinner"></div></div>
+{% endblock %}

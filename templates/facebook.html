@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block title %}Facebook Video Downloader{% endblock %}
+{% block css %}<link rel="stylesheet" href="{{ url_for('static', filename='facebook.css') }}">{% endblock %}
+{% block extra_head %}
+<!-- Any page-specific head content can go here -->
+{% endblock %}
+{% block content %}
+<!-- Hero -->
+<section class="hero">
+  <h1>Download Facebook Videos Instantly</h1>
+  <p>Paste the Facebook video link below and download in high quality. Fast, free, and secure!</p>
+</section>
+
+<!-- Tool Form -->
+<div class="tool-section">
+  <form id="facebookDownloadForm">
+    <input type="text" name="url" id="facebookUrlInput" placeholder="Paste Facebook video link here" required>
+    <button type="submit">Download Video</button>
+  </form>
+  <div id="facebookErrorBox" class="error" style="display:none;"></div>
+  <div id="facebookPreviewBox" class="preview" style="display:none;"></div>
+</div>
+
+{% include 'features.html' %}
+{% include 'howto.html' %}
+
+<!-- Loader -->
+<div class="loader-overlay" id="facebookLoader"><div class="spinner"></div></div>
+{% endblock %}
+{% block js %}<script src="{{ url_for('static', filename='facebook.js') }}"></script>{% endblock %}
