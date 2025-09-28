@@ -1,0 +1,42 @@
+header { background: #fff; padding: 12px 20px; box-shadow: 0 2px 6px rgba(0,0,0,0.08); position: sticky; top: 0; z-index: 10; }
+header .logo { font-weight: 600; font-size: 20px; text-decoration: none; }
+header nav { float: right; }
+header nav a { margin-left: 15px; text-decoration: none; font-weight: 500; }
+
+.menu-dropdown {
+  position: relative;
+  display: inline-block;
+}
+.menu-dropdown .menu-trigger {
+  cursor: pointer;
+  margin-left: 15px;
+  text-decoration: none;
+  font-weight: 500;
+}
+.menu-dropdown .submenu {
+  display: none;
+  position: absolute;
+  left: 0;
+  top: 100%;
+  background: #fff;
+  min-width: 160px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.10);
+  border-radius: 8px;
+  padding: 8px 0;
+  z-index: 100;
+}
+.menu-dropdown .submenu a {
+  display: block;
+  padding: 10px 20px;
+  color: #333;
+  text-decoration: none;
+  font-weight: 500;
+  white-space: nowrap;
+}
+.menu-dropdown .submenu a:hover {
+  background: #f5f7fa;
+}
+.menu-dropdown:hover .submenu,
+.menu-dropdown:focus-within .submenu {
+  display: block;
+}

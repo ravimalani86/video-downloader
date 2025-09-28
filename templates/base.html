@@ -6,6 +6,10 @@
   <title>{% block title %}Instagram Video Downloader{% endblock %}</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='header.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='footer.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='features.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='howto.css') }}">
   {% block css %}<link rel="stylesheet" href="{{ url_for('static', filename='instagram.css') }}">{% endblock %}
   {% block extra_head %}{% endblock %}
 </head>
