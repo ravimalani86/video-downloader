@@ -15,62 +15,49 @@ os.makedirs(STATIC_DOWNLOADS, exist_ok=True)
 def index():
     return render_template("index.html")
 
-@app.route("/api/download", methods=["POST"])
+@app.route("/api/instagram/download", methods=["POST"])
 def api_download():
     try:
         data = request.get_json()
         if not data or "url" not in data:
             return jsonify({"flag": False, "error": "URL not provided"}), 400
 
-        url = data["url"]
-        full_instagram_url = url if url.startswith("http") else f"https://{url}"
-        snapdownloader_url = f"https://snapdownloader.com/tools/instagram-downloader/download?url={requests.utils.quote(full_instagram_url)}"
+        instagram_url = data["url"]
 
+        # ssvid.net API integration
+        api_url = "https://ssvid.net/api/ajax/search?hl=en"
         headers = {
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"
+            "accept": "*/*",
+            "accept-language": "en-US,en;q=0.7",
+            "content-type": "application/x-www-form-urlencoded; charset=UTF-8",
+            "x-requested-with": "XMLHttpRequest",
+            "Referer": "https://ssvid.net/en19/instagram-video-downloader"
         }
-        response = requests.get(snapdownloader_url, headers=headers)
-        soup = BeautifulSoup(response.text, "html.parser")
-
+        data = {
+            "query": instagram_url,
+            "cf_token": "",
+            "vt": "youtube"
+        }
+        response = requests.post(api_url, headers=headers, data=data)
+        if not response.ok:
+            return jsonify({"flag": False, "error": "Failed to fetch from ssvid.net"}), 500
+        result = response.json()
         # Extract video and thumbnail URLs
-        download_links = soup.select('.download-item a.btn-download')
-        video_url = download_links[0]['href'] if len(download_links) > 0 else None
-        thumbnail_url = download_links[-1]['href'] if len(download_links) > 1 else None
-
+        try:
+            video_url = result['data']['links']['video']['HD video']['url']
+        except Exception:
+            video_url = None
+        try:
+            thumbnail_url = result['data']['thumbnail']
+        except Exception:
+            thumbnail_url = None
         flag = bool(video_url and thumbnail_url)
-
-        # Download thumbnail locally if available
-        local_thumb_url = None
-        if thumbnail_url:
-            try:
-                shortcode = None
-                # Try to extract shortcode from video_url or request url
-                if video_url:
-                    parts = video_url.split('/')
-                    for part in parts:
-                        if len(part) == 11 and part.isalnum():
-                            shortcode = part
-                            break
-                if not shortcode:
-                    # fallback: try from input url
-                    input_url = data["url"]
-                    shortcode = input_url.split("/")[-2] if "/" in input_url else "thumb"
-                thumb_name = f"{shortcode}_thumb.jpg"
-                thumb_path = os.path.join(STATIC_DOWNLOADS, thumb_name)
-                thumb_resp = requests.get(thumbnail_url, stream=True, timeout=10)
-                if thumb_resp.status_code == 200:
-                    with open(thumb_path, "wb") as f:
-                        for chunk in thumb_resp.iter_content(chunk_size=8192):
-                            if chunk:
-                                f.write(chunk)
-                    local_thumb_url = url_for("static", filename=f"downloads/{thumb_name}")
-            except Exception:
-                local_thumb_url = None
 
         return jsonify({
             "flag": flag,
             "videoUrl": video_url,
-            "thumbnailUrl": local_thumb_url or thumbnail_url
+            "thumbnailUrl": thumbnail_url,
+            "result": result
         })
     except Exception as e:
         return jsonify({"flag": False, "error": f"Failed to scrape the SnapDownloader page: {str(e)}"})

@@ -130,7 +130,7 @@
     previewBox.style.display = 'none';
     loader.style.display = 'block';
     const url = document.getElementById('urlInput').value.trim();
-    fetch('/api/download', {
+    fetch('/api/instagram/download', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ url })
