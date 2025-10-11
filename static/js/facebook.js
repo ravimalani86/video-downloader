@@ -39,12 +39,9 @@ fbForm.addEventListener('submit', function(e) {
       fbPreviewBox.style.display = 'none';
     } else {
       fbPreviewBox.innerHTML = `
-        <h3>Video Preview</h3>
+        <h3>Preview</h3>
+        ${data.title ? `<h4 style="color: #4267B2; margin-bottom: 12px;">${data.title}</h4>` : ''}
         ${data.thumbnailUrl ? `<img id='fbThumbImg' src="${data.thumbnailUrl}" alt="Thumbnail" style="max-width:300px;border-radius:8px;box-shadow:0 3px 10px rgba(0,0,0,0.1);margin-bottom:12px;" />` : ''}
-        <video id='fbVideoPreview' controls poster="${data.thumbnailUrl || ''}">
-          <source src="${data.videoUrl}" type="video/mp4">
-          Your browser does not support the video tag.
-        </video>
         <br>
         <a href="${data.videoUrl}" download>⬇️ Download Video</a>
       `;

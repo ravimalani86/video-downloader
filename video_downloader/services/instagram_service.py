@@ -26,5 +26,9 @@ def download_instagram_video(instagram_url):
         thumbnail_url = result['data']['thumbnail']
     except Exception:
         thumbnail_url = None
+    try:
+        title = result['data']['title']
+    except Exception:
+        title = None
     flag = bool(video_url and thumbnail_url)
-    return video_url, thumbnail_url, result, flag
+    return video_url, thumbnail_url, title, result, flag

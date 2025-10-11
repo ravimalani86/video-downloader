@@ -22,7 +22,7 @@ button { padding: 12px; font-size: 16px; border: none; border-radius: 8px; curso
 /* Preview */
 .preview { margin-top: 25px; text-align: center; }
 .preview video { width: 100%; max-width: 500px; border-radius: 8px; box-shadow: 0 3px 10px rgba(0,0,0,0.1); }
-.preview a { display: inline-block; margin-top: 12px; text-decoration: none; border-radius: 6px; transition: background 0.3s; }
+.preview a { display: inline-block; margin-top: 8px; padding: 10px; text-decoration: none; border-radius: 6px; transition: background 0.3s; }
 
 /* Features Section */
 .features { padding: 40px 20px; background: #fff; }

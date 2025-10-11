@@ -1,0 +1,13 @@
+/* LinkedIn-specific theme overrides */
+header .logo { color: #0077B5; }
+header nav a:hover { color: #0077B5; }
+.hero { background: linear-gradient(135deg, #0077B5, #005885); }
+button { background-color: #0077B5; color: #fff; }
+button:hover { background-color: #005885; }
+input[type="text"]:focus { border-color: #0077B5; outline: none; }
+.preview a { background: #0077B5; color: #fff; }
+.preview a:hover { background: #005885; }
+.feature h3 { color: #0077B5; }
+footer a { color: #0077B5; }
+footer a:hover { text-decoration: underline; }
+.loader-overlay .spinner { border-top: 6px solid #0077B5; }

@@ -23,12 +23,9 @@ form.addEventListener('submit', function(e) {
       previewBox.style.display = 'none';
     } else {
       previewBox.innerHTML = `
-        <h3>Video Preview</h3>
+        <h3>Preview</h3>
+        ${data.title ? `<h4 style="color: #E1306C; margin-bottom: 12px;">${data.title}</h4>` : ''}
         ${data.thumbnailUrl ? `<img id='thumbImg' src="${data.thumbnailUrl}" alt="Thumbnail" style="max-width:300px;border-radius:8px;box-shadow:0 3px 10px rgba(0,0,0,0.1);margin-bottom:12px;" />` : ''}
-        <video id='videoPreview' controls poster="${data.thumbnailUrl || ''}">
-          <source src="${data.videoUrl}" type="video/mp4">
-          Your browser does not support the video tag.
-        </video>
         <br>
         <a href="${data.videoUrl}" download>⬇️ Download Video</a>
       `;
