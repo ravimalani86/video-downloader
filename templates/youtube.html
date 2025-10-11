@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block title %}YouTube Video Downloader{% endblock %}
+{% block extra_head %}
+<!-- Any page-specific head content can go here -->
+{% endblock %}
+{% block css %}<link rel="stylesheet" href="{{ url_for('static', filename='css/youtube.css') }}">{% endblock %}
+{% block js %}<script src="{{ url_for('static', filename='js/youtube.js') }}"></script>{% endblock %}
+{% block content %}
+<!-- Hero -->
+<section class="hero">
+  <h1>Download YouTube Videos Instantly</h1>
+  <p>Paste the YouTube video link below and download in multiple formats and qualities. Fast, free, and secure!</p>
+</section>
+
+<!-- Tool Form -->
+<div class="tool-section">
+  <form id="youtubeDownloadForm">
+    <input type="text" name="url" id="youtubeUrlInput" placeholder="Paste YouTube video link here" required>
+    <button type="submit">Download</button>
+  </form>
+  <div id="youtubeErrorBox" class="error" style="display:none;"></div>
+  <div id="youtubePreviewBox" class="preview" style="display:none;"></div>
+</div>
+
+{% include 'our_tools.html' %}
+{% include 'features.html' %}
+{% include 'howto.html' %}
+
+<!-- Loader -->
+<div class="loader-overlay" id="youtubeLoader"><div class="spinner"></div></div>
+{% endblock %}

@@ -1,0 +1,156 @@
+/* YouTube-specific theme overrides */
+header .logo { color: #FF0000; }
+header nav a:hover { color: #FF0000; }
+.hero { background: linear-gradient(135deg, #FF0000, #CC0000); }
+button { background-color: #FF0000; color: #fff; }
+button:hover { background-color: #CC0000; }
+input[type="text"]:focus { border-color: #FF0000; outline: none; }
+.preview a { background: #FF0000; color: #fff; }
+.preview a:hover { background: #CC0000; }
+.feature h3 { color: #FF0000; }
+footer a { color: #FF0000; }
+footer a:hover { text-decoration: underline; }
+.loader-overlay .spinner { border-top: 6px solid #FF0000; }
+
+/* YouTube-specific download table styling */
+.download-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  background: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.download-table th {
+  background: #FF0000;
+  color: white;
+  padding: 12px;
+  text-align: left;
+  font-weight: 600;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.download-table td {
+  padding: 12px;
+  border-bottom: 1px solid #e1e8ed;
+  font-size: 14px;
+}
+
+.download-table tr:last-child td {
+  border-bottom: none;
+}
+
+.download-table tr:hover {
+  background: #f7f9fa;
+}
+
+.download-btn {
+  background: #FF0000;
+  color: white;
+  padding: 8px 16px !important;
+  border: none;
+  border-radius: 4px;
+  text-decoration: none;
+  font-size: 12px !important;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  transition: all 0.3s ease;
+  display: inline-block;
+  min-width: 80px;
+  text-align: center;
+}
+
+.download-btn:hover {
+  background: #CC0000;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  color: white;
+  text-decoration: none;
+}
+
+.convert-btn {
+  background: #FF6B35;
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  min-width: 80px;
+  text-align: center;
+}
+
+.convert-btn:hover {
+  background: #E55A2B;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.convert-btn:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.convert-btn.converting {
+  background: #FFA500;
+  animation: pulse 1.5s infinite;
+}
+
+.convert-btn.converted {
+  background: #4CAF50;
+}
+
+.convert-btn.error {
+  background: #f44336;
+}
+
+@keyframes pulse {
+  0% { opacity: 1; }
+  50% { opacity: 0.7; }
+  100% { opacity: 1; }
+}
+
+.quality-badge {
+  background: #ffe6e6;
+  color: #FF0000;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.format-badge {
+  background: #e6f3ff;
+  color: #0066cc;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.duration-info {
+  background: #f0f0f0;
+  color: #666;
+  padding: 8px 12px;
+  border-radius: 4px;
+  font-size: 14px;
+  margin-top: 15px;
+  display: inline-block;
+}
+
+/* Format-specific styling */
+.format-mp4 { border-left: 4px solid #FF0000; }
+.format-m4a { border-left: 4px solid #FF6B35; }
+.format-mp3 { border-left: 4px solid #4CAF50; }
+.format-3gp { border-left: 4px solid #9C27B0; }

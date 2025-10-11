@@ -1,0 +1,62 @@
+<!-- Our Tools Section -->
+<section class="our-tools">
+  <div class="container">
+    <h2>Our Tools</h2>
+    <div class="tools-grid">
+      {% if request.endpoint != 'youtube' %}
+      <div class="tool-item">
+        <div class="tool-icon youtube-icon">
+          <i class="fab fa-youtube"></i>
+        </div>
+        <h3>YouTube Downloader</h3>
+        <p>Download YouTube videos in multiple formats and qualities</p>
+        <a href="/youtube" class="tool-link">Try Now</a>
+      </div>
+      {% endif %}
+      
+      {% if request.endpoint != 'instagram' %}
+      <div class="tool-item">
+        <div class="tool-icon instagram-icon">
+          <i class="fab fa-instagram"></i>
+        </div>
+        <h3>Instagram Downloader</h3>
+        <p>Download Instagram videos, reels, and posts instantly</p>
+        <a href="/" class="tool-link">Try Now</a>
+      </div>
+      {% endif %}
+      
+      {% if request.endpoint != 'twitter' %}
+      <div class="tool-item">
+        <div class="tool-icon twitter-icon">
+          <i class="fab fa-twitter"></i>
+        </div>
+        <h3>Twitter Downloader</h3>
+        <p>Download Twitter/X videos in multiple resolutions</p>
+        <a href="/twitter" class="tool-link">Try Now</a>
+      </div>
+      {% endif %}
+      
+      {% if request.endpoint != 'facebook' %}
+      <div class="tool-item">
+        <div class="tool-icon facebook-icon">
+          <i class="fab fa-facebook"></i>
+        </div>
+        <h3>Facebook Downloader</h3>
+        <p>Download Facebook videos in high quality</p>
+        <a href="/facebook" class="tool-link">Try Now</a>
+      </div>
+      {% endif %}
+      
+      {% if request.endpoint != 'linkedin' %}
+      <div class="tool-item">
+        <div class="tool-icon linkedin-icon">
+          <i class="fab fa-linkedin"></i>
+        </div>
+        <h3>LinkedIn Downloader</h3>
+        <p>Download LinkedIn videos professionally</p>
+        <a href="/linkedin" class="tool-link">Try Now</a>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</section>
