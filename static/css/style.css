@@ -20,9 +20,148 @@ button { padding: 12px; font-size: 16px; border: none; border-radius: 8px; curso
 .error { background: #ffe0e0; color: #c20000; padding: 10px; border-radius: 8px; text-align: center; }
 
 /* Preview */
-.preview { margin-top: 25px; text-align: center; }
+.preview { 
+  margin-top: 25px; 
+  text-align: center; 
+  background: #fff;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+  border: 1px solid #e1e5e9;
+}
+.preview h3 {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 15px;
+  color: #2c3e50;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.preview h4 {
+  font-size: 16px;
+  font-weight: 500;
+  margin-bottom: 15px;
+  line-height: 1.4;
+  word-wrap: break-word;
+}
 .preview video { width: 100%; max-width: 500px; border-radius: 8px; box-shadow: 0 3px 10px rgba(0,0,0,0.1); }
-.preview a { display: inline-block; margin-top: 8px; padding: 10px; text-decoration: none; border-radius: 6px; transition: background 0.3s; }
+.preview a { 
+  display: inline-block; 
+  margin-top: 15px; 
+  padding: 12px 24px; 
+  text-decoration: none; 
+  border-radius: 8px; 
+  transition: all 0.3s ease;
+  font-weight: 500;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+.preview a:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+/* Shimmer Loading Effect */
+.shimmer {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 8px;
+  margin: 10px 0;
+}
+
+.shimmer-text {
+  height: 20px;
+  margin-bottom: 10px;
+}
+
+.shimmer-image {
+  height: 200px;
+  width: 100%;
+  max-width: 300px;
+  margin: 0 auto;
+}
+
+.shimmer-button {
+  height: 40px;
+  width: 150px;
+  margin: 15px auto 0;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* Image Loading States */
+.image-container {
+  position: relative;
+  display: inline-block;
+  max-width: 300px;
+  margin: 0 auto;
+}
+
+.image-placeholder {
+  width: 100%;
+  height: 200px;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #666;
+  font-size: 14px;
+  position: relative;
+  overflow: hidden;
+}
+
+.image-placeholder::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+  animation: imageShimmer 2s infinite;
+}
+
+@keyframes imageShimmer {
+  0% { left: -100%; }
+  100% { left: 100%; }
+}
+
+.image-loading {
+  opacity: 0.7;
+  transition: opacity 0.3s ease;
+}
+
+.image-loaded {
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+.image-error {
+  background: #f8f9fa;
+  border: 2px dashed #dee2e6;
+  color: #6c757d;
+}
+
+.loading-spinner {
+  width: 20px;
+  height: 20px;
+  border: 2px solid #f3f3f3;
+  border-top: 2px solid #007bff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-right: 8px;
+}
 
 /* Features Section */
 .features { padding: 40px 20px; background: #fff; }

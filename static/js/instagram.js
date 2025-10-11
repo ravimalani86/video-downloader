@@ -6,7 +6,13 @@ const previewBox = document.getElementById('previewBox');
 form.addEventListener('submit', function(e) {
   e.preventDefault();
   errorBox.style.display = 'none';
-  previewBox.style.display = 'none';
+  previewBox.style.display = 'block';
+  previewBox.innerHTML = `
+    <h3>Preview</h3>
+    <div class="shimmer shimmer-text"></div>
+    <div class="shimmer shimmer-image"></div>
+    <div class="shimmer shimmer-button"></div>
+  `;
   loader.style.display = 'block';
   const url = document.getElementById('urlInput').value.trim();
   fetch('/api/instagram/download', {
@@ -25,18 +31,42 @@ form.addEventListener('submit', function(e) {
       previewBox.innerHTML = `
         <h3>Preview</h3>
         ${data.title ? `<h4 style="color: #E1306C; margin-bottom: 12px;">${data.title}</h4>` : ''}
-        ${data.thumbnailUrl ? `<img id='thumbImg' src="${data.thumbnailUrl}" alt="Thumbnail" style="max-width:300px;border-radius:8px;box-shadow:0 3px 10px rgba(0,0,0,0.1);margin-bottom:12px;" />` : ''}
+        ${data.thumbnailUrl ? `
+          <div class="image-container">
+            <div class="image-placeholder" id="imagePlaceholder">
+              <div class="loading-spinner"></div>
+              Loading image...
+            </div>
+            <img id='thumbImg' src="${data.thumbnailUrl}" alt="Thumbnail" style="max-width:300px;border-radius:8px;box-shadow:0 3px 10px rgba(0,0,0,0.1);margin-bottom:12px;display:none;" />
+          </div>
+        ` : ''}
         <br>
         <a href="${data.videoUrl}" download>⬇️ Download Video</a>
       `;
       previewBox.style.display = 'block';
       errorBox.style.display = 'none';
 
-      // If thumbnail fails to load, hide it and show video as main preview
+      // Handle image loading states
       const thumbImg = document.getElementById('thumbImg');
-      if (thumbImg) {
+      const imagePlaceholder = document.getElementById('imagePlaceholder');
+      
+      if (thumbImg && imagePlaceholder) {
+        thumbImg.onload = function() {
+          // Image loaded successfully
+          imagePlaceholder.style.display = 'none';
+          thumbImg.style.display = 'block';
+          thumbImg.classList.add('image-loaded');
+        };
+        
         thumbImg.onerror = function() {
-          thumbImg.style.display = 'none';
+          // Image failed to load
+          imagePlaceholder.innerHTML = `
+            <div style="text-align: center; color: #666;">
+              <i class="fas fa-image" style="font-size: 24px; margin-bottom: 8px; display: block;"></i>
+              Image not available
+            </div>
+          `;
+          imagePlaceholder.classList.add('image-error');
         };
       }
     }

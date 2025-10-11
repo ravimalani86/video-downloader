@@ -22,7 +22,13 @@ if (burger && navLinks) {
 linkedinForm.addEventListener('submit', function(e) {
   e.preventDefault();
   linkedinErrorBox.style.display = 'none';
-  linkedinPreviewBox.style.display = 'none';
+  linkedinPreviewBox.style.display = 'block';
+  linkedinPreviewBox.innerHTML = `
+    <h3>Preview</h3>
+    <div class="shimmer shimmer-text"></div>
+    <div class="shimmer shimmer-image"></div>
+    <div class="shimmer shimmer-button"></div>
+  `;
   linkedinLoader.style.display = 'block';
   const url = document.getElementById('linkedinUrlInput').value.trim();
   fetch('/api/linkedin/download', {
@@ -41,18 +47,42 @@ linkedinForm.addEventListener('submit', function(e) {
       linkedinPreviewBox.innerHTML = `
         <h3>Preview</h3>
         ${data.title ? `<h4 style="color: #0077B5; margin-bottom: 12px;">${data.title}</h4>` : ''}
-        ${data.thumbnailUrl ? `<img id='linkedinThumbImg' src="${data.thumbnailUrl}" alt="Thumbnail" style="max-width:300px;border-radius:8px;box-shadow:0 3px 10px rgba(0,0,0,0.1);margin-bottom:12px;" />` : ''}
+        ${data.thumbnailUrl ? `
+          <div class="image-container">
+            <div class="image-placeholder" id="linkedinImagePlaceholder">
+              <div class="loading-spinner"></div>
+              Loading image...
+            </div>
+            <img id='linkedinThumbImg' src="${data.thumbnailUrl}" alt="Thumbnail" style="max-width:300px;border-radius:8px;box-shadow:0 3px 10px rgba(0,0,0,0.1);margin-bottom:12px;display:none;" />
+          </div>
+        ` : ''}
         <br>
         <a href="${data.videoUrl}" download>⬇️ Download Video</a>
       `;
       linkedinPreviewBox.style.display = 'block';
       linkedinErrorBox.style.display = 'none';
 
-      // If thumbnail fails to load, hide it and show video as main preview
+      // Handle image loading states
       const thumbImg = document.getElementById('linkedinThumbImg');
-      if (thumbImg) {
+      const imagePlaceholder = document.getElementById('linkedinImagePlaceholder');
+      
+      if (thumbImg && imagePlaceholder) {
+        thumbImg.onload = function() {
+          // Image loaded successfully
+          imagePlaceholder.style.display = 'none';
+          thumbImg.style.display = 'block';
+          thumbImg.classList.add('image-loaded');
+        };
+        
         thumbImg.onerror = function() {
-          thumbImg.style.display = 'none';
+          // Image failed to load
+          imagePlaceholder.innerHTML = `
+            <div style="text-align: center; color: #666;">
+              <i class="fas fa-image" style="font-size: 24px; margin-bottom: 8px; display: block;"></i>
+              Image not available
+            </div>
+          `;
+          imagePlaceholder.classList.add('image-error');
         };
       }
     }
