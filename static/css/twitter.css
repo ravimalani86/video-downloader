@@ -1,0 +1,81 @@
+/* Twitter-specific theme overrides */
+header .logo { color: #1DA1F2; }
+header nav a:hover { color: #1DA1F2; }
+.hero { background: linear-gradient(135deg, #1DA1F2, #0d8bd9); }
+button { background-color: #1DA1F2; color: #fff; }
+button:hover { background-color: #0d8bd9; }
+input[type="text"]:focus { border-color: #1DA1F2; outline: none; }
+.preview a { background: #1DA1F2; color: #fff; }
+.preview a:hover { background: #0d8bd9; }
+.feature h3 { color: #1DA1F2; }
+footer a { color: #1DA1F2; }
+footer a:hover { text-decoration: underline; }
+.loader-overlay .spinner { border-top: 6px solid #1DA1F2; }
+
+/* Twitter-specific download table styling */
+.download-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  background: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.download-table th {
+  background: #1DA1F2;
+  color: white;
+  padding: 12px;
+  text-align: left;
+  font-weight: 600;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.download-table td {
+  padding: 12px;
+  border-bottom: 1px solid #e1e8ed;
+  font-size: 14px;
+}
+
+.download-table tr:last-child td {
+  border-bottom: none;
+}
+
+.download-table tr:hover {
+  background: #f7f9fa;
+}
+
+.download-btn {
+  background: #1DA1F2;
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  text-decoration: none;
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  transition: all 0.3s ease;
+  display: inline-block;
+}
+
+.download-btn:hover {
+  background: #0d8bd9;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  color: white;
+  text-decoration: none;
+}
+
+.resolution-badge {
+  background: #e1f5fe;
+  color: #1DA1F2;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 500;
+}

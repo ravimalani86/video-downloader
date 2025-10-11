@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block title %}Twitter Video Downloader{% endblock %}
+{% block extra_head %}
+<!-- Any page-specific head content can go here -->
+{% endblock %}
+{% block css %}<link rel="stylesheet" href="{{ url_for('static', filename='css/twitter.css') }}">{% endblock %}
+{% block js %}<script src="{{ url_for('static', filename='js/twitter.js') }}"></script>{% endblock %}
+{% block content %}
+<!-- Hero -->
+<section class="hero">
+  <h1>Download Twitter Videos Instantly</h1>
+  <p>Paste the Twitter/X video link below and download in multiple formats and resolutions. Fast, free, and secure!</p>
+</section>
+
+<!-- Tool Form -->
+<div class="tool-section">
+  <form id="twitterDownloadForm">
+    <input type="text" name="url" id="twitterUrlInput" placeholder="Paste Twitter/X video link here" required>
+    <button type="submit">Download</button>
+  </form>
+  <div id="twitterErrorBox" class="error" style="display:none;"></div>
+  <div id="twitterPreviewBox" class="preview" style="display:none;"></div>
+</div>
+
+{% include 'features.html' %}
+{% include 'howto.html' %}
+
+<!-- Loader -->
+<div class="loader-overlay" id="twitterLoader"><div class="spinner"></div></div>
+{% endblock %}
