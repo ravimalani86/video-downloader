@@ -3,7 +3,6 @@ header .logo { color: #E1306C; }
 header nav a:hover { color: #E1306C; }
 .hero { background: linear-gradient(135deg, #E1306C, #FD1D1D); }
 button { background-color: #E1306C; color: #fff; }
-button:hover { background-color: #FD1D1D; }
 input[type="text"]:focus { border-color: #E1306C; outline: none; }
 .preview a { background: #E1306C; color: #fff; }
 .preview a:hover { background: #FD1D1D; }

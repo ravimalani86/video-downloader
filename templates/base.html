@@ -21,6 +21,7 @@
     {% block content %}{% endblock %}
   </main>
   {% include 'footer.html' %}
+  <script src="{{ url_for('static', filename='js/footer.js') }}"></script>
   {% block js %}<script src="{{ url_for('static', filename='js/instagram.js') }}"></script>{% endblock %}
 </body>
 </html>
